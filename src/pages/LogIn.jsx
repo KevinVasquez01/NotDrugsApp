@@ -1,11 +1,12 @@
 import React from 'react'
 import { Formik, useField } from 'formik'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
+
 import StyledTextInput from '../components/StyledTextInput.jsx'
 import StyledText from '../components/StyledText.jsx'
 import { loginValidationSchema } from '../validationSchemas/login'
 import TitleLogIn from '../components/TtitleLogIn.jsx'
-import { LinearGradient } from 'expo-linear-gradient';
 
 const initialValues = {
   email: '',
@@ -72,6 +73,7 @@ const FormikInputValue = ({ name, ...props }) => {
 }
 
 export default function LogInPage () {
+
   return (
   <Formik validationSchema={loginValidationSchema} initialValues={initialValues} onSubmit={values => console.log(values)}>
         { ({ handleSubmit }) => {
