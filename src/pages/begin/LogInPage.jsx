@@ -3,10 +3,13 @@ import { Formik, useField } from 'formik'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 
-import StyledTextInput from '../components/StyledTextInput.jsx'
-import StyledText from '../components/StyledText.jsx'
-import { loginValidationSchema } from '../validationSchemas/login'
-import TitleLogIn from '../components/TtitleLogIn.jsx'
+import StyledTextInput from '../../components/StyledTextInput.jsx'
+import StyledText from '../../components/StyledText.jsx'
+import { loginValidationSchema } from '../../validationSchemas/login'
+import TitleLogIn from '../../components/TtitleLogIn.jsx'
+import Navigation from '../../navigations/navigation.jsx'
+import { useNavigation } from '@react-navigation/native'
+import { isUserLogged } from '../../utils/actions'
 
 const initialValues = {
   email: '',
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
   linear: {
     height: 50,
     borderRadius: 25,
-    padding: 10,
+    padding: 8,
     alignItems: 'center',
     justifyContent: 'center'
   }, 
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
   }, 
   createAccount: {
       fontWeight: 'bold',
-      color: '#32404A'
+      color: '#7da453'
   }
 })
 
@@ -74,8 +77,12 @@ const FormikInputValue = ({ name, ...props }) => {
 
 export default function LogInPage () {
 
+  const navigation = useNavigation()
+
   return (
-  <Formik validationSchema={loginValidationSchema} initialValues={initialValues} onSubmit={values => console.log(values)}>
+        <Formik validationSchema={loginValidationSchema} initialValues={initialValues} onSubmit={values => {
+          navigation.navigate('Begin')
+        }}>
         { ({ handleSubmit }) => {
           return (
             <View style={styles.form}>
@@ -100,8 +107,12 @@ export default function LogInPage () {
                         <Text style={styles.text}>Log In</Text>
                     </LinearGradient>
                 </TouchableOpacity>
-                <Text style={styles.dontAccount}>Don't have an account?</Text> 
-                <Text style={styles.createAccount}>Create</Text>
+                  <Text style={styles.dontAccount}
+                        onPress={() => navigation.navigate('Register')}
+                          >Don't have an account?{' '}
+                    <Text style={styles.createAccount}>Create</Text>
+                  </Text> 
+                  
             </View>
           )
         } }

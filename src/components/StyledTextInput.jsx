@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
     marginTop: 10,
-    width: '100%',
+    width: '85%',
     backgroundColor: '#fff'
   },
   error: {

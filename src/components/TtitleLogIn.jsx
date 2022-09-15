@@ -28,12 +28,6 @@ const styles = StyleSheet.create({
         color: 'gray',
         marginBottom: 10
     },
-    image: {
-        width: '100%',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        padding: 80
-    },
     logoCannabis: {
         alignItems: 'center'
     }
