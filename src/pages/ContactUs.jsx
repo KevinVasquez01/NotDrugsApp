@@ -4,7 +4,7 @@ import React from 'react'
 export default function ContactUs() {
   return (
     <View>
-      <Text>ContactUs...</Text>
+      <Text>ContactUs</Text>
     </View>
   )
 }
