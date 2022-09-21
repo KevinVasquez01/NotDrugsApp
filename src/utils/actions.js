@@ -1,7 +1,7 @@
 import { db } from './firebase'
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signOut, User} from 'firebase/auth' 
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signOut, User, signInWithEmailAndPassword} from 'firebase/auth' 
 import 'firebase/firestore'
-import { useNavigation } from '@react-navigation/native'
+
 
 
 const auth = getAuth()
@@ -20,12 +20,24 @@ export const isUserLogged = () => {
 
 export const registerUser = async (email, password) => {
     const result = {statusResponse: true, error: null}
-    const navigation = useNavigation()
     try {
         await createUserWithEmailAndPassword(auth, email, password)
-        navigation.navigate('Begin')
     } catch (error) {
+        result.statusResponse = false
+        result.error = 'This email is already registered'
         result.error = console.log('This email is already registered')
+    }
+    return result
+}
+
+export const loginWithEmailAndPassword = async (email, password) => {
+    const result = {statusResponse: true, error: null}
+    try {
+        await signInWithEmailAndPassword(auth, email, password)
+    } catch (error) {
+        result.statusResponse = false
+        result.error = 'Invalid User or Password'
+        result.error = console.log('Invalid User or Password')
     }
     return result
 }

@@ -1,8 +1,8 @@
-import { createStackNavigator } from '@react-navigation/stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 import ContactUs from '../pages/ContactUs'
 
-const Stack = createStackNavigator()
+const Stack = createNativeStackNavigator()
 
 export default function ContactUsStack() {
   return (
@@ -10,7 +10,7 @@ export default function ContactUsStack() {
         <Stack.Screen
             name="Contact-us"
             component={ContactUs}
-            options={{title: 'Contact Us'}}
+            options={{title: 'Contact Us', headerLeft: () => null}}
         />
     </Stack.Navigator>
   )

@@ -9,8 +9,8 @@ import { useNavigation } from '@react-navigation/native'
 import StyledTextInput from '../../components/StyledTextInput.jsx'
 import StyledText from '../../components/StyledText.jsx'
 import { registerValidationSchema } from '../../validationSchemas/register'
-import { isUserLogged, registerUser, getCurrentUser, getCurrentUserCon } from '../../utils/actions.js';
-
+import { registerUser, getCurrentUser } from '../../utils/actions.js';
+import Loading from '../../components/Loading.jsx';
 
 const FormikInputValue = ({ name, ...props }) => {
   const [field, meta, helpers] = useField(name)
@@ -32,15 +32,39 @@ export default function Register() {
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState(initialValues)
     const [errorEmail, setErrorEmail] = useState('')
+    const [loading, setLoading] = useState(false)
 
-   // const navigation = useNavigation()
- 
+    const navigation = useNavigation()
+
+    const doRegisterUser = async (email, password) => {
+      formData.email = email;
+      formData.password = password
+      if(!(registerValidationSchema)){
+        return
+      }
+  
+      setLoading(true)
+      const result = await registerUser(formData.email, formData.password)
+      setLoading(false)
+      
+      if(!result.statusResponse){
+        setErrorEmail(result.error)
+        return
+      }
+  
+      navigation.navigate('Begin')
+    }
+
   return (
-    <Formik validationSchema={registerValidationSchema} initialValues={initialValues} onSubmit={values => {
-      registerUser(values.email, values.password)
-      formData.email = values.email
-      formData.password = values.password
-      console.log(getCurrentUser())
+    <Formik validationSchema={registerValidationSchema} initialValues={initialValues} onSubmit={(values, actions) => {
+      doRegisterUser(values.email, values.password)
+      actions.resetForm({
+        values: {
+          email: '',
+          password: '',
+          confirm: ''
+        }
+      })
     }}>
       { ({ handleSubmit }) => {
         return (
@@ -92,7 +116,7 @@ export default function Register() {
                         <Text style={styles.text}>Sing In New User</Text>
                     </LinearGradient>
                 </TouchableOpacity>
-            
+                <Loading isVisible={loading} text='Creating Account...'/>
           </View>
              ) } }
     </Formik>

@@ -1,12 +1,12 @@
-import { createStackNavigator } from '@react-navigation/stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 import LogInPage from '../pages/begin/LogInPage'
 import Register from '../pages/begin/Register'
 import 'react-native-gesture-handler';
-import Navigation from './navigation';
+import Navigation from './Navigation';
 import { NavigationContainer } from '@react-navigation/native';
 
-const Stack = createStackNavigator()
+const Stack = createNativeStackNavigator()
 
 export default function LogInStack() {
   return (

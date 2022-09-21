@@ -1,8 +1,8 @@
-import { createStackNavigator } from '@react-navigation/stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 import Information from '../pages/Information'
 
-const Stack = createStackNavigator()
+const Stack = createNativeStackNavigator()
 
 export default function InformationStack() {
   return (
@@ -10,7 +10,7 @@ export default function InformationStack() {
         <Stack.Screen
             name="Information"
             component={Information}
-            options={{title: 'Information'}}
+            options={{title: 'Information', headerLeft: () => null}}
         />
     </Stack.Navigator>
   )

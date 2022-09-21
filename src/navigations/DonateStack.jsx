@@ -1,8 +1,8 @@
-import { createStackNavigator } from '@react-navigation/stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 import Donate from '../pages/Donate'
 
-const Stack = createStackNavigator()
+const Stack = createNativeStackNavigator()
 
 export default function DonateStack() {
   return (
@@ -10,7 +10,7 @@ export default function DonateStack() {
         <Stack.Screen
             name="Donate"
             component={Donate}
-            options={{title: 'Donate'}}
+            options={{title: 'Donate', headerLeft: () => null}}
         />
     </Stack.Navigator>
   )

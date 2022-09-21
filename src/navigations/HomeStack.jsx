@@ -1,8 +1,8 @@
-import { createStackNavigator } from '@react-navigation/stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 import Home from '../pages/Home'
 
-const Stack = createStackNavigator()
+const Stack = createNativeStackNavigator()
 
 export default function HomeStack() {
   return (
@@ -10,7 +10,7 @@ export default function HomeStack() {
         <Stack.Screen
             name="Home"
             component={Home}
-            options={{title: 'Home'}}
+            options={{title: 'Home', headerLeft: () => null}}
         />
     </Stack.Navigator>
   )
