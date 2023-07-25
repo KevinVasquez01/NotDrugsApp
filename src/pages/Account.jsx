@@ -24,9 +24,16 @@ export default function Account() {
   return (
     <View style={styles.container}>
       {
-        user && <InfoUser user={user}/>
+       user && (
+        <View>        
+          <InfoUser 
+            user={user} 
+            setLoading={setLoading} 
+            setLoadingText={setLoadingText}/>
+          <Text>Account Options</Text>
+       </View>
+       )
       }
-      <Text>Account Info</Text>
       <Button
         title='Sign Off'
         buttonStyle={styles.btnCloseSession}

@@ -82,7 +82,8 @@ export default function LogInPage () {
                 <FormikInputValue
                     name='email'
                     placeholder='user@email.com'
-                    />
+                    keyboardType='email-address'
+                />
                 <FormikInputValue
                     name= 'password'
                     placeholder='password'

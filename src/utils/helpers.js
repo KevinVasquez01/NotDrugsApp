@@ -1,17 +1,20 @@
 import * as ImagePicker from 'expo-image-picker';
 import { Alert } from 'react-native';
-import { Camera } from 'expo-camera'
 
-export const loadImageFromGallery = async (array) => {
+
+export const loadImageFromGallery = async () => {
     const response = { status: false, image: null }
-    const resultPermissions = await Camera.requestCameraPermissionsAsync()
-    if(resultPermissions.status === 'denied'){
+    const resultPermissions = await ImagePicker.requestMediaLibraryPermissionsAsync()
+    if(resultPermissions.status !== 'granted'){
         Alert.alert('Debes de darle permiso para acceder a las imagenes del teléfono')
         return response
     }
-    const result = await ImagePicker.launchImageLibraryAsync({
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: array
+        aspect: [1, 1],
+        quality: 1,
+        base64: true
     })
 
     if(result.cancelled){
@@ -19,6 +22,6 @@ export const loadImageFromGallery = async (array) => {
     }
     response.status = true
     response.image = result.uri
-
+    
     return response
 }

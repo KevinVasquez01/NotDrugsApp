@@ -1,7 +1,7 @@
 import LogInStack from './src/navigations/LogInStack';
 
-
 export default function App() {
+  
   return (
     // <View style={styles.container}>
        <LogInStack/>
@@ -9,7 +9,6 @@ export default function App() {
     </View> }*/
   );
 }
-
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1,

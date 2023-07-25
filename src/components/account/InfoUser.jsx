@@ -1,14 +1,40 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Alert } from 'react-native'
+import React, { useState } from 'react'
 import { Avatar } from 'react-native-elements'
-import { loadImageFromGallery } from '../../utils/helpers'
 
-export default function InfoUser({ user }) {
+import { loadImageFromGallery } from '../../utils/helpers'
+import { uploadImage } from '../../utils/actions'
+import { updateProfiles } from '../../utils/actions'
+
+
+export default function InfoUser({ user, setLoading, setLoadingText }) {
     
-    const changePhoto = async () => {
-        const result = await loadImageFromGallery([1,1])
-        console.log(result)
+  const [photoUrl, setPhotoUrl] = useState(user.photoURL)
+
+  const changePhoto = async () => {
+    const result = await loadImageFromGallery()
+    if(!result.status){
+        return
+    }        
+    setLoadingText('Actualizando imagen...')
+    setLoading(true)
+    const resultUploadImage = await uploadImage(result.image, 'avatars', user.uid)
+    
+    if(!resultUploadImage.statusResponse){
+        setLoading(false)
+        Alert.alert('Ha ocurrido un error al almacenar la foto de perfil')
+        return
     }
+    const resultUpdateProfile = await updateProfiles({ photoURL: resultUploadImage.url})
+    setLoading(false)
+    if(resultUpdateProfile.statusResponse){
+        setPhotoUrl(resultUploadImage.url)
+    }else{
+        Alert.alert('Ha ocurrido un error al actualizar la foto de perfil')
+    }
+    // console.log(result.image)
+
+}
 
   return (
     <View style={styles.container}>
@@ -17,8 +43,8 @@ export default function InfoUser({ user }) {
         size='large'
         onPress={() => changePhoto()}
         source={
-            user.photoURL
-            ? { uri: photoURL } : require('../../../assets/avatar-default.jpg')
+            photoUrl
+            ? { uri: photoUrl } : require('../../../assets/avatar-default.jpg')
         }
       />
       <View style={styles.infoUser}>

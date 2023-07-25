@@ -29,7 +29,7 @@ const FormikInputValue = ({ name, ...props }) => {
 
 export default function Register() {
 
-    const [showPassword, setShowPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(true)
     const [formData, setFormData] = useState(initialValues)
     const [errorEmail, setErrorEmail] = useState('')
     const [loading, setLoading] = useState(false)
@@ -54,6 +54,7 @@ export default function Register() {
   
       navigation.navigate('Begin')
     }
+    
 
   return (
     <Formik validationSchema={registerValidationSchema} initialValues={initialValues} onSubmit={(values, actions) => {
@@ -73,6 +74,7 @@ export default function Register() {
               name='email'
               containerStyle={styles.input}
               placeholder='Ingresa tu email'
+              keyboardType='email-address'
               errorMessage={errorEmail}
               
             />
@@ -81,7 +83,7 @@ export default function Register() {
               containerStyle={styles.input}
               placeholder='Ingresa tu contraseña'
               password={true}
-              secureTextEntry={!showPassword}
+              secureTextEntry={!showPassword}              
               rightIcon={
                 <Icon
                     type='material-community'
@@ -159,5 +161,8 @@ const styles = StyleSheet.create({
       color: '#fff',
       fontSize: 14,
       fontWeight: 'bold'
+    },
+    icon: {
+      color: '#c1c1c1'
     }
 })
